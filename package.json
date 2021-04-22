@@ -1,0 +1,19 @@
+{
+  "name": "learnNode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "got": "^10.4.0",
+    "jsdom": "^16.2.2",
+    "json-array-streams": "^1.0.1",
+    "node-fetch": "^2.6.1"
+  }
+}
