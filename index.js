@@ -1,22 +1,31 @@
 const fs = require("fs");
 const fetch = require("node-fetch");
 const regex = new RegExp(/<a[\s]+href=\"(.*?)\"[^>]*>(.*?)<\/a>/g);
-const url = "https://www.dasparfum-beauty.de/en";
-
+const url = "https://www.google.com";
+let k = []
 
 const regex1 = new RegExp(/href="([^"]*)/);
-fetch(url)
+ getPageUrls = new Promise((resolve,reject)=>{
+  fetch(url)
   .then((response) => response.body)
   .then((res) =>
     streamToString(res, function (myStr) {
       myStr.match(regex).map((el) => {
-        console.log(el.match(regex1)[1]);
+        if ((el.match(regex1)[1][0]) === '/' ){
+          el=url+el.match(regex1)[1]
+          k.push(el)
+        } else if ((el.match(regex1)[1][0]) === 'h' ){
+          k.push(el.match(regex1)[1])
+        }
       });
+     resolve(k);
     })
   )
-  .catch((err) => console.log(err));
+  .catch((err) => reject(err));
+ } ) 
+ 
 
-var streamToString = function (stream, callback) {
+var streamToString = (stream, callback) => {
   var str = "";
   stream.on("data", function (chunk) {
     str += chunk;
@@ -25,3 +34,7 @@ var streamToString = function (stream, callback) {
     callback(str);
   });
 };
+
+getPageUrls.then((res) =>{
+  console.log(res);
+})
