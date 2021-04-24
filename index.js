@@ -1,28 +1,44 @@
 const fs = require("fs");
 const fetch = require("node-fetch");
 const regex = new RegExp(/<a[\s]+href=\"(.*?)\"[^>]*>(.*?)<\/a>/g);
-const url = "https://www.google.com";
+let defaultLink=" https://soccer365.ru"
 let k = []
+let req=[]
 
 const regex1 = new RegExp(/href="([^"]*)/);
- getPageUrls = new Promise((resolve,reject)=>{
-  fetch(url)
-  .then((response) => response.body)
-  .then((res) =>
-    streamToString(res, function (myStr) {
-      myStr.match(regex).map((el) => {
-        if ((el.match(regex1)[1][0]) === '/' ){
-          el=url+el.match(regex1)[1]
-          k.push(el)
-        } else if ((el.match(regex1)[1][0]) === 'h' ){
-          k.push(el.match(regex1)[1])
-        }
-      });
-     resolve(k);
-    })
-  )
-  .catch((err) => reject(err));
- } ) 
+let getPageUrls = (link=defaultLink)=>{
+  req.push( new Promise((resolve,reject)=>{
+    if(link.indexOf(defaultLink) !=-1){
+      fetch(link)
+      .then((response) => response.body)
+      .then((res) =>
+        streamToString(res, function (myStr) {
+          myStr.match(regex)?.map((el) => {
+            if ((el.match(regex1)[1][0]) === '/' ){
+              el=link+el.match(regex1)[1]
+              if(k.indexOf(el) == -1){
+                k.push(el)  
+                getPageUrls(el)
+                
+              }
+            } else if ((el.match(regex1)[1][0]) === 'h' ){
+              if(k.indexOf(el.match(regex1)[1]) == -1){
+                k.push(el.match(regex1)[1])
+                getPageUrls(el.match(regex1)[1])
+              }
+            
+            }
+  
+          });
+         resolve(k);
+         
+        })
+      )
+      .catch((err) => reject(err));
+    }
+   
+   } ) )
+} 
  
 
 var streamToString = (stream, callback) => {
@@ -35,6 +51,6 @@ var streamToString = (stream, callback) => {
   });
 };
 
-getPageUrls.then((res) =>{
-  console.log(res);
-})
+getPageUrls()
+
+Promise.all(req).then((res)=>console.log(res),'a').finally(()=>console.log('finish'))
