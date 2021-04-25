@@ -1,7 +1,7 @@
 const fs = require("fs");
 const fetch = require("node-fetch");
 const regex = new RegExp(/<a[\s]+href=\"(.*?)\"[^>]*>(.*?)<\/a>/g);
-let defaultLink = "https://soccer365.ru";
+let defaultLink = "https://varks.am";
 let k = [];
 let req = [];
 
@@ -29,9 +29,7 @@ let getPageUrls = (link = defaultLink) => {
                   }
                 }
               });
-              resolve(k.map((el) => {
-                getPageUrls(el)
-              }));
+              resolve(k)
               
             })
           )
