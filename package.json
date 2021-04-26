@@ -11,8 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "got": "^10.4.0",
-    "jsdom": "^16.2.2",
     "json-array-streams": "^1.0.1",
     "node-fetch": "^2.6.1"
   }
