@@ -1,14 +1,10 @@
 {
-  "name": "learnNode",
+  "name": "Task",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
-  },
   "keywords": [],
-  "author": "",
+  "author": "Aram Manukyan",
   "license": "ISC",
   "dependencies": {
     "json-array-streams": "^1.0.1",

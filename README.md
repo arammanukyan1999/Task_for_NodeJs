@@ -1,2 +1,2 @@
 1. npm install
-2. Node index.js
+2. node index.js
